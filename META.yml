@@ -1,0 +1,16 @@
+--- #YAML:1.0
+name:                File-Stat-OO
+version:             0.01
+abstract:            OO interface for accessing file status attributes
+license:             ~
+author:              
+    - Dan Horne <dhorne@cpan.org>
+generated_by:        ExtUtils::MakeMaker version 6.44
+distribution_type:   module
+requires:     
+    Class::Accessor:               0
+    DateTime:                      0
+    Test::More:                    0
+meta-spec:
+    url:     http://module-build.sourceforge.net/META-spec-v1.3.html
+    version: 1.3

@@ -14,11 +14,11 @@ File::Stat::OO - OO interface for accessing file status attributes
 
 =head1 VERSION
 
-Version 0.01
+Version 0.02
 
 =cut
 
-our $VERSION = '0.01';
+our $VERSION = '0.02';
 
 =head1 SYNOPSIS
 
@@ -33,11 +33,15 @@ or inflate epoch seconds into DateTime objects
 
     my $foo = File::Stat::OO->new();
     $foo->use_datetime(1);
+
+    # Or the two lines above can be combined as
+    #   my $foo = File::Stat::OO->new({use_datetime => 1});
+
     $foo->stat('/etc/password'); # pass file name to the stat method
     print $foo->mtime; # returns DateTime object not an epoch
     print $foo->mtime->epoch; # epoch seconds
 
-=head1 Methods
+=head1 METHODS
 
 =head2 stat
 
@@ -67,9 +71,19 @@ sub stat {
     }
 }
 
+sub owner {
+    my $self = shift;
+    return (getpwuid($self->uid))[0];
+}
+
+sub group {
+    my $self = shift;
+    return (getgrgid($self->gid))[0];
+} 
+
 =head2 use_datetime
 
-If set, invocations of stat will record times as DatetTime objects rather than
+If set, invocations of stat will record times as DateTime objects rather than
 epoch seconds
 
 =head2 dev
@@ -80,73 +94,57 @@ device number of filesystem
 
 inode number
 
-=cut
-
 =head2 mode
 
 file mode type and permissions
-
-=cut
 
 =head2 nlink
 
 number of (hard) links to the file
 
-=cut
-
 =head2 uid
 
 numeric user ID of the file's owner
 
-=cut
+=head2 owner
+
+name of the file owner
 
 =head2 gid
 
 numeric group ID of the file's owner
 
-=cut
+=head2 group
+
+group name of the file's owner
 
 =head2 rdev
 
 the device identifier (special files only)
 
-=cut
-
 =head2 size
 
 size of the file in bytes
-
-=cut
 
 =head2 atime
 
 last access time (DateTime object)
 
-=cut
-
 =head2 mtime
 
 last modify time (DateTime object)
-
-=cut
 
 =head2 ctime
 
 inode chane time (DateTime object)
 
-=cut
-
 =head2 blksize
 
 preferred blocksize for file system I/O
 
-=cut
-
 =head2 blocks
 
 actual number of blocks allocated
-
-=cut
 
 =head1 AUTHOR
 
@@ -190,7 +188,12 @@ L<http://search.cpan.org/dist/File-Stat-OO>
 
 =head1 SEE ALSO
 
-C<File::stat>
+C<File::stat> - File::Stat::OO provides additonal functionality such as:
+ 
+   * Optionally returning the atime, ctime and mtime values as DateTime
+     objects instead of epoch seconds
+   * Providing the name and owner of the file in addition to the uid
+     and gid
 
 =head1 COPYRIGHT & LICENSE
 

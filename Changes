@@ -1,5 +1,8 @@
 Revision history for File-Stat-OO
 
+0.02    02 September 2009
+        Added the owner and group functions
+
 0.01    Date/time
         First version, released on an unsuspecting world.
 

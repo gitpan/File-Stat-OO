@@ -33,7 +33,7 @@ foreach my $m (@File::Stat::OO::stat_keys) {
       if (($^O =~ /Win/)
 	&& grep(/^$m$/, (qw/ino uid gid blksize blocks owner group/)));
     next if $m eq 'rdev';
-    ok($obj->$m, "Method $m");
+    ok($obj->can($m), "Method $m");
 }
 
 $obj->use_datetime(1);
